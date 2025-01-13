@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 # As root (sudo su)
 # cd / && curl -s -H "Cache-Control: no-cache" -o "install.sh" "https://raw.githubusercontent.com/kus/cs2-modded-server/master/install.sh" && chmod +x install.sh && bash install.sh
 
@@ -264,7 +266,7 @@ else
 fi
 
 rm -f /home/${user}/cs2/game/game/csgo/addons/counterstrikesharp/configs/admins.json
-cp /root/admins.json /home/${user}/cs2/game/csgo/addons/counterstrikesharp/configs/admins.json
+cp ${SCRIPT_DIR}/admins.json /home/${user}/cs2/game/csgo/addons/counterstrikesharp/configs/admins.json
 
 echo "Starting server on $PUBLIC_IP:$PORT"
 # https://developer.valvesoftware.com/wiki/Counter-Strike_2/Dedicated_Servers#Command-Line_Parameters
