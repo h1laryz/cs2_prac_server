@@ -208,10 +208,23 @@ echo "Deleting addons folder..."
 rm -rf /home/${user}/cs2/game/csgo/addons
 sleep 1
 
+
 echo "Downloading metamod"
 cd /home/${user}/cs2/game/csgo/
 wget -O metamod.tar.gz https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1315-linux.tar.gz
 tar -xzvf metamod.tar.gz
+rm -f metamod.tar.gz
+rm -f README.md
+rm -f LICENSE
+sleep 1
+
+
+echo "Downloading sourcemod"
+wget -O sourcemod.tar.gz https://sm.alliedmods.net/smdrop/1.12/sourcemod-1.12.0-git7177-linux.tar.gzrm -rf ./cfg/sourcemod
+tar -xzvf sourcemod.tar.gz
+rm -f sourcemod.tar.gz
+rm -f README.md
+rm -f LICENSE
 sleep 1
 
 echo "Downloading cssharp"
@@ -219,6 +232,8 @@ cd /home/${user}/cs2/game/csgo/
 wget -O counterstrikesharp-with-runtime.zip $(curl -s https://api.github.com/repos/roflmuffin/CounterStrikeSharp/releases/latest | grep -oP '"browser_download_url": "\K[^"]*with-runtime-build-\d+-linux[^"]*\.zip')
 unzip counterstrikesharp-with-runtime.zip
 rm -f counterstrikesharp-with-runtime.zip
+rm -f README.md
+rm -f LICENSE
 sleep 1
 
 echo "Downloading MatchZy"
@@ -226,6 +241,8 @@ rm -rf /home/${user}/cs2/game/csgo/cfg/MatchZy
 wget -O MatchZy-latest.zip $(curl -s https://api.github.com/repos/shobhit-pathak/MatchZy/releases/latest | grep -oP '"browser_download_url": "\K[^"]*MatchZy-\d+\.\d+\.\d+\.zip')
 unzip MatchZy-latest.zip
 rm -f MatchZy-latest.zip
+rm -f README.md
+rm -f LICENSE
 sleep 1
 
 echo "Downloading CS2Rcon"
@@ -235,6 +252,18 @@ unzip CS2Rcon-latest.zip
 mv -f CS2Rcon*/addons/counterstrikesharp/plugins/CS2Rcon ./addons/counterstrikesharp/plugins/CS2Rcon
 rm -f CS2Rcon-latest.zip
 rm -rf CS2Rcon*
+rm -f README.md
+rm -f LICENSE
+sleep 1
+
+
+echo "Downloading get5"
+wget -O get5-latest.zip $(curl -s https://api.github.com/repos/splewis/get5/releases/latest | grep -oP '"browser_download_url": "\K[^"]*get5-v\d+\.\d+\.\d+\.zip')
+rm -rf ./cfg/get5/
+unzip get5-latest.zip
+rm -f get5-latest.zip
+rm -f README.md
+rm -f LICENSE
 sleep 1
 
 chown -R ${user}:${user} /home/${user}/cs2
@@ -251,7 +280,7 @@ LINE_TO_ADD="\t\t\tGame\tcsgo/addons/metamod"
 # Use a regular expression to ignore spaces when checking if the line exists
 REGEX_TO_CHECK="^[[:space:]]*Game[[:space:]]*csgo/addons/metamod"
 
-# Check if the line already exists in the file, ignoring spaces
+ Check if the line already exists in the file, ignoring spaces
 if grep -qE "$REGEX_TO_CHECK" "$FILE"; then
     echo "$FILE already patched for Metamod."
 else
@@ -265,7 +294,8 @@ else
     echo "$FILE successfully patched for Metamod."
 fi
 
-rm -f /home/${user}/cs2/game/game/csgo/addons/counterstrikesharp/configs/admins.json
+rm -f /home/${user}/cs2/game/csgo/addons/sourcemod/configs/simple_admins.ini
+cp ${SCRIPT_DIR}/simple_admins.ini /home/steam/cs2/game/csgo/addons/sourcemod/configs/simple_admins.ini
 cp ${SCRIPT_DIR}/admins.json /home/${user}/cs2/game/csgo/addons/counterstrikesharp/configs/admins.json
 
 echo "Starting server on $PUBLIC_IP:$PORT"
