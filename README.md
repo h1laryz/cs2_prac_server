@@ -2,10 +2,10 @@
 
 
 ## This server uses following mods/frameworks/plugins:
-- [Metamod](https://www.sourcemm.net/downloads.php?branch=stable) — _CSSharp doesn't work without metamod._
-- [CSSharp](https://github.com/roflmuffin/CounterStrikeSharp) — _Best framework for writing plugins for CS2 servers._
-- [MatchZy](https://github.com/shobhit-pathak/MatchZy) — _Used for practice and competitive matches._
-- [CS2Rcon](https://github.com/LordFetznschaedl/CS2Rcon) — _Allows to use !rcon via chat._
+- [Metamod](https://www.sourcemm.net/downloads.php?branch=stable) — **CSSharp doesn't work without metamod.**
+- [CSSharp](https://github.com/roflmuffin/CounterStrikeSharp) — **Best framework for writing plugins for CS2 servers.**
+- [MatchZy](https://github.com/shobhit-pathak/MatchZy) — **Used for practice and competitive matches.**
+- [CS2Rcon](https://github.com/LordFetznschaedl/CS2Rcon) — **Allows to use !rcon via chat.**
 
 
 ## Usage
