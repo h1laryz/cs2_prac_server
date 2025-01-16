@@ -313,7 +313,7 @@ echo ./game/bin/linuxsteamrt64/cs2 \
     -authkey $API_KEY \
 	+sv_setsteamaccount $STEAM_ACCOUNT \
     +game_type 0 \
-    +game_mode 0 \
+    +game_mode 1 \
     +mapgroup mg_active \
 	+sv_lan $LAN \
 	+sv_password $SERVER_PASSWORD \
@@ -330,7 +330,7 @@ sudo -u $user ./game/bin/linuxsteamrt64/cs2 \
     +map de_dust2 \
     +sv_visiblemaxplayers $MAXPLAYERS \
     +game_type 0 \
-    +game_mode 0 \
+    +game_mode 1 \
     +mapgroup mg_active \
 	+sv_lan $LAN \
 	+sv_password $SERVER_PASSWORD \
