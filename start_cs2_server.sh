@@ -133,18 +133,6 @@ else
 	exit 1
 fi
 
-PUBLIC_IP=$(dig -4 +short myip.opendns.com @resolver1.opendns.com)
-
-if [ -z "$PUBLIC_IP" ]; then
-	echo "ERROR: Cannot retrieve your public IP address..."
-	exit 1
-fi
-
-# Update DuckDNS with our current IP
-if [ ! -z "$DUCK_TOKEN" ]; then
-    echo url="http://www.duckdns.org/update?domains=$DUCK_DOMAIN&token=$DUCK_TOKEN&ip=$PUBLIC_IP" | curl -k -o /duck.log -K -
-fi
-
 echo "Checking $user user exists..."
 getent passwd ${user} >/dev/null 2&>1
 if [ "$?" -ne "0" ]; then
