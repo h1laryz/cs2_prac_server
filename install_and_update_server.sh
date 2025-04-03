@@ -170,23 +170,32 @@ rm -f README.md
 rm -f LICENSE
 sleep 1
 
-echo "Downloading cssharp"
+echo "Downloading MatchZy with cssharp"
 cd /home/root/cs2/game/csgo/
-wget -O cssharp-latest.zip $(curl -s https://api.github.com/repos/roflmuffin/CounterStrikeSharp/releases/latest | grep -oP '"browser_download_url": "\K[^"]*with-runtime[^"]*linux[^"]*\.zip')
-unzip cssharp-latest.zip
-rm -f cssharp-latest.zip
+wget -O matchzy-cssharp-latest.zip $(curl -s https://api.github.com/repos/shobhit-pathak/MatchZy/releases/latest | grep -oP '"browser_download_url": "\K[^"]*with-cssharp[^"]*linux[^"]*\.zip')
+unzip matchzy-cssharp-latest.zip
+rm -f matchzy-cssharp-latest.zip
 rm -f README.md
 rm -f LICENSE
 sleep 1
 
-echo "Downloading MatchZy"
-rm -rf /home/root/cs2/game/csgo/cfg/MatchZy
-wget -O MatchZy-latest.zip $(curl -s https://api.github.com/repos/shobhit-pathak/MatchZy/releases/latest | grep -oP '"browser_download_url": "\K[^"]*MatchZy-\d+\.\d+\.\d+\.zip')
-unzip MatchZy-latest.zip
-rm -f MatchZy-latest.zip
-rm -f README.md
-rm -f LICENSE
-sleep 1
+#echo "Downloading cssharp"
+#cd /home/root/cs2/game/csgo/
+#wget -O cssharp-latest.zip $(curl -s https://api.github.com/repos/roflmuffin/CounterStrikeSharp/releases/latest | grep -oP '"browser_download_url": "\K[^"]*with-runtime[^"]*linux[^"]*\.zip')
+#unzip cssharp-latest.zip
+#rm -f cssharp-latest.zip
+#rm -f README.md
+#rm -f LICENSE
+#sleep 1
+
+#echo "Downloading MatchZy"
+#rm -rf /home/root/cs2/game/csgo/cfg/MatchZy
+#wget -O MatchZy-latest.zip $(curl -s https://api.github.com/repos/shobhit-pathak/MatchZy/releases/latest | grep -oP '"browser_download_url": "\K[^"]*MatchZy-\d+\.\d+\.\d+\.zip')
+#unzip MatchZy-latest.zip
+#rm -f MatchZy-latest.zip
+#rm -f README.md
+#rm -f LICENSE
+#sleep 1
 
 echo "Adding admins"
 cp /scripts/admins.json /home/root/cs2/game/csgo/addons/counterstrikesharp/configs/admins.json
