@@ -1,0 +1,27 @@
+FROM ubuntu:24.10
+
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get install -y sudo wget unzip curl
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime && \
+    apt install --quiet --yes --no-install-recommends tzdata && \
+    dpkg-reconfigure --frontend noninteractive tzdata
+
+# Set working directory for scripts
+WORKDIR /scripts
+
+# Copy the installation script
+COPY install_and_update_server.sh ./
+COPY install_deps.sh ./
+COPY admins.json ./
+
+# Ensure the script is executable
+RUN chmod +x install_and_update_server.sh
+RUN chmod +x install_deps.sh
+
+# Return to root directory
+WORKDIR /
+
+# Set the entrypoint to log in as the 'steam' user and execute the server start script
+ENTRYPOINT ["bash", "-c", "/scripts/install_and_update_server.sh"]

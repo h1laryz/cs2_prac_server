@@ -1,51 +1,88 @@
-# CS2 server for pracs via MatchZy
-
-
-## This server uses following mods/frameworks/plugins:
-- [Metamod](https://www.sourcemm.net/downloads.php?branch=stable) — **CSSharp doesn't work without metamod.**
-- [CSSharp](https://github.com/roflmuffin/CounterStrikeSharp) — **Best framework for writing plugins for CS2 servers.**
-- [MatchZy](https://github.com/shobhit-pathak/MatchZy) — **Used for practice and competitive matches.**
-- [CS2Rcon](https://github.com/LordFetznschaedl/CS2Rcon) — **Allows to use !rcon via chat.**
-
-
-## Usage
-1. Clone repository or download latest release.
-2. Add environment variables to your system:
+# Env variables
 ```
+export MAX_PLAYERS="changeme"
+export LAN="0/1"
 export RCON_PASSWORD="changeme"
-export SERVER_PASSWORD="changeme"
-export PORT="27015"
-export MAXPLAYERS="changeme"
 ```
-3. Edit admins.json file and add your nickname and steamid.
-4. Launch **_start_cs2_server.sh_**.
 
+# At first you need to build docker updater
 
-## Launch server on system startup 
-### Systemctl
-1. Create `/etc/systemd/system/cs2pracserver.service` file
-2. Add following lines and change **_ExecStart_** field to your path of **_start_cs2_server.sh_**.
+`docker build --no-cache -f Dockerfile_Install_Update -t cs2-server-updater .`
+
+# Then run updater container with
+
+`docker run --rm --name cs2_updater -v ~/cs2_server/cs2/:/home/root/cs2/ cs2-server-updater`
+
+# Next we need to build image for cs2 server
+`docker build --no-cache -f Dockerfile -t cs2-server-runner .`
+
+# Now we're ready to run cs2 server container
+```docker run --rm --name cs2_server_1 \
+ -v ~/cs2_server/cs2:/home/root/cs2/ \
+ -e MAX_PLAYERS="$MAX_PLAYERS" \
+ -e LAN="$LAN" \
+ -e RCON_PASSWORD="$RCON_PASSWORD" \
+ -p 27016:27015/udp -p 27016:27015/tcp \
+ cs2-server-runner```
+
+# Let's create autoupdate on system restart via systemctl
+1. Create `/etc/systemd/system/cs2_server_updater.service` file
+2. Add following lines and change **_ExecStart_** field to your path of directory and launch script
 ```
 [Unit]
-Description=CS2 Prac Server
-After=network.target
+Description=CS2 Server updater
+After=docker.service
+Requires=docker.service
 
 [Service]
-ExecStart=/root/start_cs2_server.sh
-Restart=always
+ExecStart=/bin/bash -c 'cd /root/cs2_server && docker rm -f cs2_updater && docker run --rm --name cs2_updater -v /root/cs2_server/cs2/:/home/root/cs2/ cs2-server-updater'
+Restart=no
 User=root
 Group=root
+Type=oneshot
+RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target
 ```
-3. Run following terminal commands:
+
+# Now create 3 servers that launches on startup also via systemctl
+1. Create /etc/systemd/cs2_server@.service
+2. Add following data:
 ```
-sudo systemctl enable cs2pracserver.service
-sudo systemctl start cs2pracserver.service
+[Unit]
+Description=CS2 Server Instance %i
+After=cs2_server_updater.service
+Requires=cs2_server_updater.service
+
+[Service]
+User=root
+Group=root
+Restart=always
+ExecStart=/bin/bash -c 'docker run --rm --name cs2_server_%i \
+  -v /root/cs2_server/cs2:/home/root/cs2/ \
+  -e MAX_PLAYERS="$MAX_PLAYERS" \
+  -e LAN="$LAN" \
+  -e RCON_PASSWORD="$RCON_PASSWORD" \
+  -p $((27015 + %i)):27015/udp -p $((27015 + %i)):27015/tcp \
+  cs2-server-runner'
+ExecStop=/usr/bin/docker stop cs2_server_%i
+ExecStopPost=/usr/bin/docker rm -f cs2_server_%i
+
+[Install]
+WantedBy=multi-user.target
 ```
 
+# Enable systemctl services
+```
+sudo systemctl daemon-reload
+sudo systemctl enable cs2_server_updater
+sudo systemctl start cs2_server_updater 
+```
+```
+sudo systemctl enable cs2_server@1 cs2_server@2 cs2_server@3
+sudo systemctl start cs2_server@1 cs2_server@2 cs2_server@3
+```
 
-## Supported distros:
-- Ubuntu
-- Debian
+### To get console app you need to write `docker attach cs2_server_1`
+
