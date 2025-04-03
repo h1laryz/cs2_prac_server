@@ -159,6 +159,7 @@ chmod +x /home/root/start_cs2_server.sh
 # Delete addons folder as if we remove something later in git it won't get deleted
 echo "Deleting addons folder..."
 rm -rf /home/root/cs2/game/csgo/addons
+rm -rf /home/root/cs2/game/csgo/cfg/MatchZy
 sleep 1
 
 echo "Downloading metamod"
@@ -170,32 +171,34 @@ rm -f README.md
 rm -f LICENSE
 sleep 1
 
-echo "Downloading MatchZy with cssharp"
+#echo "Downloading MatchZy with cssharp"
+#cd /home/root/cs2/game/csgo/
+#wget -O matchzy-cssharp-latest.zip $(curl -s https://api.github.com/repos/shobhit-pathak/MatchZy/releases/latest | grep -oP '"browser_download_url": "\K[^"]*with-cssharp[^"]*linux[^"]*\.zip')
+#unzip matchzy-cssharp-latest.zip
+#rm -f matchzy-cssharp-latest.zip
+#rm -f README.md
+#rm -f LICENSE
+#sleep 1
+
+echo "Downloading cssharp"
 cd /home/root/cs2/game/csgo/
-wget -O matchzy-cssharp-latest.zip $(curl -s https://api.github.com/repos/shobhit-pathak/MatchZy/releases/latest | grep -oP '"browser_download_url": "\K[^"]*with-cssharp[^"]*linux[^"]*\.zip')
-unzip matchzy-cssharp-latest.zip
-rm -f matchzy-cssharp-latest.zip
+#wget -O cssharp-latest.zip $(curl -s https://api.github.com/repos/roflmuffin/CounterStrikeSharp/releases/latest | grep -oP '"browser_download_url": "\K[^"]*with-runtime[^"]*linux[^"]*\.zip')
+wget -O cssharp-latest.zip https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v1.0.314/counterstrikesharp-with-runtime-linux-1.0.314.zip
+unzip cssharp-latest.zip
+rm -f cssharp-latest.zip
 rm -f README.md
 rm -f LICENSE
 sleep 1
 
-#echo "Downloading cssharp"
-#cd /home/root/cs2/game/csgo/
-#wget -O cssharp-latest.zip $(curl -s https://api.github.com/repos/roflmuffin/CounterStrikeSharp/releases/latest | grep -oP '"browser_download_url": "\K[^"]*with-runtime[^"]*linux[^"]*\.zip')
-#unzip cssharp-latest.zip
-#rm -f cssharp-latest.zip
-#rm -f README.md
-#rm -f LICENSE
-#sleep 1
-
-#echo "Downloading MatchZy"
-#rm -rf /home/root/cs2/game/csgo/cfg/MatchZy
+echo "Downloading MatchZy"
+rm -rf /home/root/cs2/game/csgo/cfg/MatchZy
 #wget -O MatchZy-latest.zip $(curl -s https://api.github.com/repos/shobhit-pathak/MatchZy/releases/latest | grep -oP '"browser_download_url": "\K[^"]*MatchZy-\d+\.\d+\.\d+\.zip')
-#unzip MatchZy-latest.zip
-#rm -f MatchZy-latest.zip
-#rm -f README.md
-#rm -f LICENSE
-#sleep 1
+wget -O MatchZy-latest.zip https://github.com/shobhit-pathak/MatchZy/releases/download/0.8.8/MatchZy-0.8.8.zip
+unzip MatchZy-latest.zip
+rm -f MatchZy-latest.zip
+rm -f README.md
+rm -f LICENSE
+sleep 1
 
 echo "Adding admins"
 cp /scripts/admins.json /home/root/cs2/game/csgo/addons/counterstrikesharp/configs/admins.json
