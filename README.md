@@ -17,12 +17,12 @@ export RCON_PASSWORD="changeme"
 `docker build --no-cache -f Dockerfile -t cs2-server-runner .`
 
 # Now we're ready to run cs2 server container
-```docker run --rm --name cs2_server_1 \
+```docker run -i -d --rm --name cs2_server_1 \
  -v ~/cs2_server/cs2:/home/root/cs2/ \
  -e MAX_PLAYERS="$MAX_PLAYERS" \
  -e LAN="$LAN" \
  -e RCON_PASSWORD="$RCON_PASSWORD" \
- -p 27016:27015/udp -p 27016:27015/tcp \
+ -p 27015:27015/udp -p 27015:27015/tcp \
  cs2-server-runner```
 
 # Let's create autoupdate on system restart via systemctl
@@ -59,7 +59,7 @@ Requires=cs2_server_updater.service
 User=root
 Group=root
 Restart=always
-ExecStart=/bin/bash -c 'docker run --rm --name cs2_server_%i \
+ExecStart=/bin/bash -c 'docker run -d -i --rm --name cs2_server_%i \
   -v /root/cs2_server/cs2:/home/root/cs2/ \
   -e MAX_PLAYERS="$MAX_PLAYERS" \
   -e LAN="$LAN" \
