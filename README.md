@@ -37,7 +37,7 @@ After=docker.service
 Requires=docker.service
 
 [Service]
-ExecStart=/bin/bash -c 'cd /root/cs2_server && docker rm -f cs2_updater && docker run --rm --name cs2_updater -v /root/cs2_prac_server/cs2/:/home/root/cs2/ cs2-server-updater'
+ExecStart=/bin/bash -c 'docker rm -f cs2_updater && docker run --rm --name cs2_updater -v /root/cs2_prac_server/cs2/:/home/root/cs2/ cs2-server-updater'
 Restart=no
 User=root
 Group=root
