@@ -49,7 +49,7 @@ WantedBy=multi-user.target
 ```
 
 # Now create 3 servers that launches on startup also via systemctl
-1. Create `/etc/systemd/cs2_server@.service`
+1. Create `/etc/systemd/system/cs2_server@.service`
 2. Add following data:
 ```
 [Unit]
