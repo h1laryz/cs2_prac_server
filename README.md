@@ -28,8 +28,8 @@ docker run -i -d --rm --name cs2_server_1 \
 ```
 
 # Let's create autoupdate on system restart via systemctl
-1. Create **_/etc/systemd/system/cs2_server_updater.service_** file
-2. Add following lines and change **_ExecStart_** field to your path of directory and launch script
+1. Create `/etc/systemd/system/cs2_server_updater.service` file
+2. Add following lines and change `ExecStart` field to your path of directory and launch script
 ```
 [Unit]
 Description=CS2 Server updater
@@ -49,7 +49,7 @@ WantedBy=multi-user.target
 ```
 
 # Now create 3 servers that launches on startup also via systemctl
-1. Create **_/etc/systemd/cs2_server@.service_**
+1. Create `/etc/systemd/cs2_server@.service`
 2. Add following data:
 ```
 [Unit]
@@ -87,5 +87,5 @@ sudo systemctl enable cs2_server@1 cs2_server@2 cs2_server@3
 sudo systemctl start cs2_server@1 cs2_server@2 cs2_server@3
 ```
 
-### To get console app you need to write **_docker attach cs2_server_1_**
+### To get console app you need to write `docker attach cs2_server_1`
 
