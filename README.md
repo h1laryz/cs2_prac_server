@@ -17,16 +17,18 @@ export RCON_PASSWORD="changeme"
 `docker build --no-cache -f Dockerfile -t cs2-server-runner .`
 
 # Now we're ready to run cs2 server container
-```docker run -i -d --rm --name cs2_server_1 \
+```
+docker run -i -d --rm --name cs2_server_1 \
  -v ~/cs2_server/cs2:/home/root/cs2/ \
  -e MAX_PLAYERS="$MAX_PLAYERS" \
  -e LAN="$LAN" \
  -e RCON_PASSWORD="$RCON_PASSWORD" \
  -p 27015:27015/udp -p 27015:27015/tcp \
- cs2-server-runner```
+ cs2-server-runner
+```
 
 # Let's create autoupdate on system restart via systemctl
-1. Create `/etc/systemd/system/cs2_server_updater.service` file
+1. Create **_/etc/systemd/system/cs2_server_updater.service_** file
 2. Add following lines and change **_ExecStart_** field to your path of directory and launch script
 ```
 [Unit]
@@ -47,7 +49,7 @@ WantedBy=multi-user.target
 ```
 
 # Now create 3 servers that launches on startup also via systemctl
-1. Create /etc/systemd/cs2_server@.service
+1. Create **_/etc/systemd/cs2_server@.service_**
 2. Add following data:
 ```
 [Unit]
@@ -79,10 +81,11 @@ sudo systemctl daemon-reload
 sudo systemctl enable cs2_server_updater
 sudo systemctl start cs2_server_updater 
 ```
+
 ```
 sudo systemctl enable cs2_server@1 cs2_server@2 cs2_server@3
 sudo systemctl start cs2_server@1 cs2_server@2 cs2_server@3
 ```
 
-### To get console app you need to write `docker attach cs2_server_1`
+### To get console app you need to write **_docker attach cs2_server_1_**
 
