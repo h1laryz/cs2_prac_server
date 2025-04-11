@@ -201,7 +201,7 @@ rm -f LICENSE
 echo "matchzy_use_pause_command_for_tactical_pause true" >> /home/root/cs2/game/csgo/cfg/MatchZy/config.cfg
 echo "matchzy_enable_tech_pause false" >> /home/root/cs2/game/csgo/cfg/MatchZy/config.cfg
 echo "matchzy_tech_pause_flag \"@css/root\"" >> /home/root/cs2/game/csgo/cfg/MatchZy/config.cfg
-echo "matchzy_minimum_ready_required 0" >> /home/root/cs2/game/csgo/cfg/MatchZy/config.cfg
+echo "matchzy_minimum_ready_required 10" >> /home/root/cs2/game/csgo/cfg/MatchZy/config.cfg
 sleep 1
 
 echo "Adding admins"
