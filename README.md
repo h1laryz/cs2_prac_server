@@ -11,7 +11,7 @@ export RCON_PASSWORD="changeme"
 
 # Then run updater container with
 
-`docker run --rm --name cs2_updater -v ~/cs2_server/cs2/:/home/root/cs2/ cs2-server-updater`
+`docker run --rm --name cs2_updater -v ~/cs2_prac_server/cs2/:/home/root/cs2/ cs2-server-updater`
 
 # Next we need to build image for cs2 server
 `docker build --no-cache -f Dockerfile -t cs2-server-runner .`
@@ -19,7 +19,7 @@ export RCON_PASSWORD="changeme"
 # Now we're ready to run cs2 server container
 ```
 docker run -i -d --rm --name cs2_server_1 \
- -v ~/cs2_server/cs2:/home/root/cs2/ \
+ -v ~/cs2_prac_server/cs2:/home/root/cs2/ \
  -e MAX_PLAYERS="$MAX_PLAYERS" \
  -e LAN="$LAN" \
  -e RCON_PASSWORD="$RCON_PASSWORD" \
@@ -37,7 +37,7 @@ After=docker.service
 Requires=docker.service
 
 [Service]
-ExecStart=/bin/bash -c 'cd /root/cs2_server && docker rm -f cs2_updater && docker run --rm --name cs2_updater -v /root/cs2_server/cs2/:/home/root/cs2/ cs2-server-updater'
+ExecStart=/bin/bash -c 'cd /root/cs2_server && docker rm -f cs2_updater && docker run --rm --name cs2_updater -v /root/cs2_prac_server/cs2/:/home/root/cs2/ cs2-server-updater'
 Restart=no
 User=root
 Group=root
@@ -62,7 +62,7 @@ User=root
 Group=root
 Restart=always
 ExecStart=/bin/bash -c 'docker run -d -i --rm --name cs2_server_%i \
-  -v /root/cs2_server/cs2:/home/root/cs2/ \
+  -v /root/cs2_prac_server/cs2:/home/root/cs2/ \
   -e MAX_PLAYERS="$MAX_PLAYERS" \
   -e LAN="$LAN" \
   -e RCON_PASSWORD="$RCON_PASSWORD" \
