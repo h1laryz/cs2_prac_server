@@ -12,7 +12,7 @@ echo "/home/root/cs2/game/bin/linuxsteamrt64/cs2 \
     +game_mode 1 \
     +mapgroup mg_active \
         +sv_lan $LAN \
-        +rcon_password $RCON_PASSWORD"
+        +rcon_password \"$RCON_PASSWORD\""
 
 /home/root/cs2/game/bin/linuxsteamrt64/cs2 \
     -dedicated \
@@ -26,5 +26,5 @@ echo "/home/root/cs2/game/bin/linuxsteamrt64/cs2 \
     +game_mode 1 \
     +mapgroup mg_active \
 	+sv_lan $LAN \
-	+rcon_password $RCON_PASSWORD
+	+rcon_password "$RCON_PASSWORD"
 
