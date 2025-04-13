@@ -61,12 +61,12 @@ Requires=cs2_server_updater.service
 User=root
 Group=root
 Restart=always
-ExecStart=/bin/bash -c 'docker run -d -i --rm --name cs2_server_%i \
+ExecStart=/bin/bash -c 'docker run -i --rm --name cs2_server_%i \
   -v /root/cs2_prac_server/cs2:/home/root/cs2/ \
   -e MAX_PLAYERS="$MAX_PLAYERS" \
   -e LAN="$LAN" \
   -e RCON_PASSWORD="$RCON_PASSWORD" \
-  -p $((27015 + %i)):27015/udp -p $((27015 + %i)):27015/tcp \
+  -p $((27015 + %i - 1)):27015/udp -p $((27015 + %i - 1)):27015/tcp \
   cs2-server-runner'
 ExecStop=/usr/bin/docker stop cs2_server_%i
 ExecStopPost=/usr/bin/docker rm -f cs2_server_%i
