@@ -1,0 +1,27 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish-docker-image-master:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/docker' # Running this job only for master branch
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build & Publish Docker image for LATEST tag
+        run: |
+          docker build . -t ghcr.io/h1laryz/cs2_prac_server:latest -f ./Dockerfile
+          docker push ghcr.io/h1laryz/cs2_prac_server:latest
